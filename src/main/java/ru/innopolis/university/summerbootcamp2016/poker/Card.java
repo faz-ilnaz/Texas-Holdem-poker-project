@@ -11,6 +11,12 @@ public class Card {
         this.value = value;
     }
 
+
+    public Card(int suitNum, int valueNum) {
+        this.suit = Suit.values()[suitNum];
+        this.value = Value.values()[valueNum];
+    }
+
     public Suit getSuit() {
         return suit;
     }
