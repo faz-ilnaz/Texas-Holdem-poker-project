@@ -24,4 +24,10 @@ public class Game {
 
 
     }
+
+    public int CombinationChecker(Deck thisDeck, int playerId){
+        int[] valueArray = new int[13];
+        int[] suitArray = new int[4];
+        return 1;
+    }
 }
