@@ -17,7 +17,7 @@ public class Bank {
     }
     public void collectStakes(List<Player> playersList){
         for (int i = 0; i < playersList.length; i++){
-            this.bankBalance += playersList[i].getStake();
+            this.bankBalance += playersList[i].collectPlayerStake();
         }
 
     }

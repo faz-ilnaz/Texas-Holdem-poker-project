@@ -5,6 +5,8 @@ import java.util.List;
 public class Player {
 
     private String name;
+    private long stake;
+    private long balance;
     private List<Card> cards;
 
     public String getName() {
@@ -21,6 +23,26 @@ public class Player {
 
     public void setCards(List<Card> cards) {
         this.cards = cards;
+    }
+
+    public long getStake() {
+        return stake;
+    }
+
+    public void setStake(long stake) {
+        this.stake = stake;
+    }
+
+    public long collectPlayerStake(){
+        this.balance -= stake;
+        return this.stake;
+    }
+
+    public boolean setPlayerStake(long stake){
+        if (stake > this.balance){
+            return false;
+        }
+        return true;
     }
 
     @Override
