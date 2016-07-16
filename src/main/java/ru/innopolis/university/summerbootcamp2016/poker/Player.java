@@ -7,6 +7,7 @@ public class Player {
     private String name;
     private long stake;
     private long balance;
+    private long id;
     private List<Card> cards;
 
     public String getName() {
