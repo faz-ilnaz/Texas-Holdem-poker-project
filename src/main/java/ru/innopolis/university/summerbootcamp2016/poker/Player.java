@@ -33,15 +33,19 @@ public class Player {
         this.stake = stake;
     }
 
+    //Method returns stake and resets it
     public long collectPlayerStake(){
-        this.balance -= stake;
-        return this.stake;
+        int s = stake;
+        stake=0;
+        return s;
     }
-
+    //Function set stake and subtract balance if stake < balance
     public boolean setPlayerStake(long stake){
         if (stake > this.balance){
             return false;
         }
+        this.stake = stake;
+        this.balance-=stake;
         return true;
     }
 
