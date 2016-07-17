@@ -1,5 +1,7 @@
 package ru.innopolis.university.summerbootcamp2016.poker;
 
+import java.util.List;
+
 public class Bank {
     private long bankBalance;
 
@@ -16,8 +18,9 @@ public class Bank {
         return bal;
     }
     public void collectStakes(List<Player> playersList){
-        for (int i = 0; i < playersList.length; i++){
-            this.bankBalance += playersList[i].collectPlayerStake();
+
+        for (Player player : playersList) {
+            this.bankBalance += player.collectPlayerStake();
         }
 
     }
