@@ -13,45 +13,16 @@ public class Game {
     public static final int AMOUNT_OF_PLAYERS = 3;
     public static final int DEFALT_BALANCE = 100;
 
-    //This is a test for combinationChecker. It creates new deck and takes 7 cards from it (5 for table, 2 for player). Then checks combinations possible.
-    public static void testCombinationChecker(int id) {
-        Deck deckTest = new Deck();
-        UI.displayCard(deckTest.getCard(1));
-        UI.displayCard(deckTest.getCard(1));
-        UI.displayCard(deckTest.getCard(1));
-        UI.displayCard(deckTest.getCard(1));
-        UI.displayCard(deckTest.getCard(1));
-        UI.displayCard(deckTest.getCard(id));
-        UI.displayCard(deckTest.getCard(id));
-        System.out.println();
-        int combination = combinationChecker(deckTest, id);
-        PokerHand testHand = PokerHand.values()[10 - combination];
-        System.out.println(combination);
-        System.out.println(testHand);
-    }
-
-    //This function shows deck array
-    public void showArrayDeck(Deck deck) {
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 13; j++) {
-                System.out.print(deck.deck[i][j] + " ");
-            }
-            System.out.println();
-        }
-    }
-
-    public static void showPlayerInfo(List<Player> players){
-        for (int i = 0; i < AMOUNT_OF_PLAYERS; i++) {
-            players.get(i).printInfo();
-            players.get(i).printCards();
-        }
-    }
 
     public static void main(String[] args) {
         Deck currentDeck = new Deck();
         Table currentTable = new Table();
         Bank bank = new Bank();
         amountCardsTable = 0;
+
+        /*
+         * Testing of correct working of objects, their methods and collaboration of objects
+         */
 
         List<Player> players = new ArrayList<Player>(AMOUNT_OF_PLAYERS);
         for (int i = 2; i < AMOUNT_OF_PLAYERS + 2; i++) {
@@ -82,7 +53,7 @@ public class Game {
         players.get(1).call();
         players.get(2).call();
         players.get(0).check();
-        System.out.println("Bank Balance: " + bank.getBankBalance());
+
         //Printing player's info
 
         //Show info after some actions
@@ -90,10 +61,10 @@ public class Game {
         showPlayerInfo(players);
 
         bank.collectStakes(players);
+        System.out.println("Bank Balance after collecting Stakes: " + bank.getBankBalance());
 
         currentTable.takeFlop(currentDeck);
 
-        currentTable.showTable();
 
         //Testing things
         //testCombinationChecker(3);
@@ -102,6 +73,44 @@ public class Game {
         //testCombinationChecker(3);
         currentTable.showTable();
         //System.out.println(amountCardsTable);
+    }
+
+    /*
+        Under you can find helping methods and combination checker methods
+     */
+
+    //This is a test for combinationChecker. It creates new deck and takes 7 cards from it (5 for table, 2 for player). Then checks combinations possible.
+    public static void testCombinationChecker(int id) {
+        Deck deckTest = new Deck();
+        UI.displayCard(deckTest.getCard(1));
+        UI.displayCard(deckTest.getCard(1));
+        UI.displayCard(deckTest.getCard(1));
+        UI.displayCard(deckTest.getCard(1));
+        UI.displayCard(deckTest.getCard(1));
+        UI.displayCard(deckTest.getCard(id));
+        UI.displayCard(deckTest.getCard(id));
+        System.out.println();
+        int combination = combinationChecker(deckTest, id);
+        PokerHand testHand = PokerHand.values()[10 - combination];
+        System.out.println(combination);
+        System.out.println(testHand);
+    }
+
+    //This function shows deck array
+    public void showArrayDeck(Deck deck) {
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 13; j++) {
+                System.out.print(deck.deck[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static void showPlayerInfo(List<Player> players) {
+        for (int i = 0; i < AMOUNT_OF_PLAYERS; i++) {
+            players.get(i).printInfo();
+            players.get(i).printCards();
+        }
     }
 
 
@@ -126,7 +135,7 @@ public class Game {
         return numberOfTwos;
     }
 
-    //It returns the strenght of best possible combination. 10 - Royal flush, 1 - high card
+    //It returns the strength of best possible combination. 10 - Royal flush, 1 - high card
     public static int combinationChecker(Deck thisDeck, int playerId) {
         int[] valueArray = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         int[] suitArray = new int[]{0, 0, 0, 0};

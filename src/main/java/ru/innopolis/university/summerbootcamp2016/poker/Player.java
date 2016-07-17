@@ -12,11 +12,15 @@ public class Player {
     private boolean dealer = false;
     private List<Card> cards;
     private int strengthOfHand;
-    private boolean isPlaying=true;
+    private boolean isPlaying = true;
 
-    public boolean isPlaying() {   return isPlaying;   }
+    public boolean isPlaying() {
+        return isPlaying;
+    }
 
-    public void setPlaying(boolean playing) {    isPlaying = playing;    }
+    public void setPlaying(boolean playing) {
+        isPlaying = playing;
+    }
 
 
     public String getName() {
@@ -47,9 +51,13 @@ public class Player {
         return cards;
     }
 
-    public void setStrength(int strength){this.strengthOfHand = strength;}
+    public void setStrength(int strength) {
+        this.strengthOfHand = strength;
+    }
 
-    public int getStrength(){return strengthOfHand;}
+    public int getStrength() {
+        return strengthOfHand;
+    }
 
     public void setCards(List<Card> cards) {
         this.cards = cards;
@@ -116,15 +124,14 @@ public class Player {
             } else {
                 System.out.println("You can not call");
             }
-        }
-        else{
+        } else {
             System.out.println("You can not make a call! Your stake is the same!");
         }
     }
 
     // check() method returns true if you can make a check
     public boolean check() {
-        if(this.stake==Game.maxStake)
+        if (this.stake == Game.maxStake)
             return true;
         else
             return false;
@@ -141,8 +148,8 @@ public class Player {
         }
     }
 
-    public void printInfo(){
-        System.out.println("\nPlayer " + this.getId() + " " + this.getStake() + " " + this.getBalance());
+    public void printInfo() {
+        System.out.println("\nPlayer " + this.getId() + " Stake:" + this.getStake() + " Balance:" + this.getBalance());
     }
 
     @Override

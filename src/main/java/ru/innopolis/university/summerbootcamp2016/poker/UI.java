@@ -9,7 +9,7 @@ public class UI {
     final private static String diamonds = "\u2666";
     final private static String clubs = "\u2663";
 
-    public static void displayCard(Card card){
+    public static void displayCard(Card card) {
         switch (card.getSuit()) {
             case SPADES:
                 System.out.print(spades);
@@ -24,9 +24,9 @@ public class UI {
                 System.out.print(clubs);
                 break;
         }
-        System.out.print(card.getValue()+"\n");
-        }
-
+        System.out.print(card.getValue() + "\n");
     }
+
+}
 
 
