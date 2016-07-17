@@ -27,8 +27,24 @@ public class Game {
     }
 
     public int CombinationChecker(Deck thisDeck, int playerId){
-        int[] valueArray = new int[13];
-        int[] suitArray = new int[4];
+        int[] valueArray = new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0};
+        int[] suitArray = new int[]{0,0,0,0};
+        int maxS=0,maxV=0;
+        for(int i=0; i<4; i++){
+            for(int j=0; j<13; j++){
+                if(thisDeck.deck[i][j]==1||thisDeck.deck[i][j]==playerId){
+                    suitArray[i]++;
+                    valueArray[j]++;
+                    if(maxS<suitArray[i]){
+                        maxS=suitArray[i];
+                    }
+                    if(maxV<valueArray[j]){
+                        maxV=valueArray[j];
+                    }
+                }
+            }
+        }
+
         return 1;
     }
 }
