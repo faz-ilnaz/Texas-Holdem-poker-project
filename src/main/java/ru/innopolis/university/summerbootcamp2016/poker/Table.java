@@ -23,7 +23,6 @@ public class Table {
         System.out.println("Table:");
         for(int i=0;i<cardsOnTable.size();i++){
             UI.displayCard(cardsOnTable.get(i));
-            System.out.println();
             //System.out.printf("%s   %s\n",cardsOnTable.get(i).getSuit(),cardsOnTable.get(i).getValue());
         }
     }

@@ -93,12 +93,14 @@ public class Game {
 
         currentTable.takeFlop(currentDeck);
 
-
         currentTable.showTable();
 
         //Testing things
         //testCombinationChecker(3);
         //currentTable.showTable();
+        //Testing things
+        //testCombinationChecker(3);
+        currentTable.showTable();
         //System.out.println(amountCardsTable);
     }
 
