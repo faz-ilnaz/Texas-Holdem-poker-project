@@ -27,7 +27,7 @@ public class Game {
     }
 
 
-    public int OlderCardStraight(int[] values){
+    public int olderCardStraight(int[] values){
         for(int i=12;i>=4;i--){
             if(values[i]>0 && values[i-1]>0 && values[i-2]>0 && values[i-3]>0 && values[i-4]>0){
                 return i;
@@ -35,7 +35,17 @@ public class Game {
         }
         return -1;
     }
-    public int CombinationChecker(Deck thisDeck, int playerId){
+    public int numberOfTwos(int[] values){
+        int numberOfTwos=0;
+        for(int i=12;i>=0;i--){
+            if(values[i]==2){
+                numberOfTwos++;
+            }
+        }
+        return numberOfTwos;
+    }
+
+    public int combinationChecker(Deck thisDeck, int playerId){
         int[] valueArray = new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0};
         int[] suitArray = new int[]{0,0,0,0};
         int maxS=0,maxV=0;
@@ -54,6 +64,47 @@ public class Game {
             }
         }
 
+        int highStraight = olderCardStraight(valueArray);
+
+        if(maxS>=5) {
+            if (highStraight == 12) {
+                return 10;
+            } else if (highStraight>-1){
+                return 9;
+            }
+            else {
+                return 6;
+            }
+        }
+        else{
+            switch(maxV){
+                case 4:
+                    return 8;
+                case 3:
+                    if(numberOfTwos(valueArray)>=1){
+                        return 7;
+                    }
+                    else {
+                        return 4;
+                    }
+                case 2:
+                    if(numberOfTwos(valueArray)>=2){
+                        return 3;
+                    }
+                    else {
+                        return 2;
+                    }
+                case 1:
+                    if(highStraight>-1){
+                        return 5;
+                    }
+                    else{
+                        return 1;
+                    }
+
+
+            }
+        }
         return 1;
     }
 }
