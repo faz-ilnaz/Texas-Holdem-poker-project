@@ -46,7 +46,6 @@ public class Player {
         stake = 0;
         return s;
     }
-
     //Function set stake and subtract balance if stake < balance
     public boolean setPlayerStake(long stake) {
         if (stake > this.balance) {

@@ -26,6 +26,15 @@ public class Game {
 
     }
 
+
+    public int OlderCardStraight(int[] values){
+        for(int i=12;i>=4;i--){
+            if(values[i]>0 && values[i-1]>0 && values[i-2]>0 && values[i-3]>0 && values[i-4]>0){
+                return i;
+            }
+        }
+        return -1;
+    }
     public int CombinationChecker(Deck thisDeck, int playerId){
         int[] valueArray = new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0};
         int[] suitArray = new int[]{0,0,0,0};
