@@ -1,5 +1,6 @@
 package ru.innopolis.university.summerbootcamp2016.poker;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
@@ -7,7 +8,7 @@ public class Player {
     private String name;
     private long stake;
     private long balance;
-    private long id;//starts from 2, 1 is a Table
+    private int id;//starts from 2, 1 is a Table
     private boolean smallBlind=false;
     private List<Card> cards;
 
@@ -69,6 +70,12 @@ public class Player {
             return true;
         else
             return false;
+    }
+
+    public void takeCards(Deck deck){
+        cards = new ArrayList<Card>();
+        cards.add(deck.getCard(id));
+        cards.add(deck.getCard(id));
     }
 
     public void raise(){
