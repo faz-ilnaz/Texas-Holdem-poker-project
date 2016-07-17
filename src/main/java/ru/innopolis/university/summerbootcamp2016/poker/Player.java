@@ -8,6 +8,7 @@ public class Player {
     private long stake;
     private long balance;
     private long id;//starts from 2, 1 is a Table
+    private boolean smallBlind=false;
     private List<Card> cards;
 
     public String getName() {
@@ -36,7 +37,7 @@ public class Player {
 
     //Method returns stake and resets it
     public long collectPlayerStake(){
-        int s = stake;
+        long s = stake;
         stake=0;
         return s;
     }
@@ -54,13 +55,20 @@ public class Player {
     }
 
     public void call(){
-        long diff = maxStake - stake;
+        long diff = Game.maxStake - stake;
         if(setPlayerStake(diff)){
             System.out.println("Call is correct");
         }
         else{
             System.out.println("You can not call");
         }
+    }
+
+    public boolean isSmallBlind(){
+        if(smallBlind)
+            return true;
+        else
+            return false;
     }
 
     public void raise(){

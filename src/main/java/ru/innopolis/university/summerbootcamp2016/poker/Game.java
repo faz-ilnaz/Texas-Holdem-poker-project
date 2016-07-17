@@ -3,7 +3,7 @@ package ru.innopolis.university.summerbootcamp2016.poker;
 public class Game {
 
     static int amountCardsTable;
-    static int maxStake=0; //the highest stake of the round
+    static long maxStake=0; //the highest stake of the round
 
     public void showArrayDeck(Deck deck) {
         for (int i = 0; i < 4; i++) {
