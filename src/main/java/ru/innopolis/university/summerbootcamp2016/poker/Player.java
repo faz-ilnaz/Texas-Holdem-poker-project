@@ -8,21 +8,33 @@ public class Player {
     private String name;
     private long stake;
     private long balance;
-    private  int id;//starts from 2, 1 is a Table
+    private int id;//starts from 2, 1 is a Table
     private boolean smallBlind = false;
     private List<Card> cards;
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
-    public void setName(String name) { this.name = name; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public int getId() { return id; }
+    public int getId() {
+        return id;
+    }
 
-    public void setId(int id) { this.id = id; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public long getBalance() { return balance; }
+    public long getBalance() {
+        return balance;
+    }
 
-    public void setBalance(long balance) { this.balance = balance; }
+    public void setBalance(long balance) {
+        this.balance = balance;
+    }
 
     public List<Card> getCards() {
         return cards;
@@ -74,25 +86,28 @@ public class Player {
     }
 
     public void raise(long raise) {
-        if(raise>Game.maxStake-this.stake){
-            if(makeStake(raise)){
+        if (raise > Game.maxStake - this.stake) {
+            if (makeStake(raise)) {
                 System.out.println("Raise is correct!");
-            }
-            else{
+            } else {
                 System.out.println("Balance is empty!");
             }
-        }
-        else{
+        } else {
             System.out.println("Raise can not be less than previus raise!");
         }
     }
+
     public void call() {
         long diff = Game.maxStake - stake;
-
-        if (makeStake(diff)) {
-            System.out.println("Call is correct");
-        } else {
-            System.out.println("You can not call");
+        if (diff != 0) {
+            if (makeStake(diff)) {
+                System.out.println("Call is correct");
+            } else {
+                System.out.println("You can not call");
+            }
+        }
+        else{
+            System.out.println("You can not make a call! Your stake is the same!");
         }
     }
 
@@ -104,9 +119,9 @@ public class Player {
 
     }
 
-    public void printCards(){
-        for(int i=0;i<cards.size();i++){
-            System.out.println(cards.get(i).getSuit()+" "+cards.get(i).getValue());
+    public void printCards() {
+        for (int i = 0; i < cards.size(); i++) {
+            System.out.println(cards.get(i).getSuit() + " " + cards.get(i).getValue());
         }
     }
 

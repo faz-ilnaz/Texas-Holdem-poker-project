@@ -49,6 +49,7 @@ public class Game {
         players.get(0).raise(19 );
         players.get(1).call();
         players.get(2).call();
+        players.get(2).call();
         bank.collectStakes(players);
         System.out.println("Bank Balance: " +bank.getBankBalance());
         //Printing player's info
@@ -60,7 +61,7 @@ public class Game {
 
         currentTable.takeFlop(currentDeck);
 
-        //currentTable.showTable();
+        currentTable.showTable();
         //System.out.println(amountCardsTable);
     }
 
