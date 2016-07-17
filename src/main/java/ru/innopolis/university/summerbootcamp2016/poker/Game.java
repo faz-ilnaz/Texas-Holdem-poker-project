@@ -21,9 +21,11 @@ public class Game {
         amountCardsTable = 0;
         currentTable.takeFlop(currentDeck);
         currentTable.showTable();
+        Player pl1 = new Player();
+        pl1.takeCards(currentDeck);
+
+        pl1.printCards();
         System.out.println(amountCardsTable);
-
-
     }
 
 
