@@ -12,13 +12,17 @@ public class Player {
     private boolean smallBlind = false;
     private List<Card> cards;
 
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public void setName(String name) { this.name = name; }
+
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id; }
+
+    public long getBalance() { return balance; }
+
+    public void setBalance(long balance) { this.balance = balance; }
 
     public List<Card> getCards() {
         return cards;
@@ -42,7 +46,6 @@ public class Player {
         stake = 0;
         return s;
     }
-
     //Function set stake and subtract balance if stake < balance
     public boolean setPlayerStake(long stake) {
         if (stake > this.balance) {
@@ -56,6 +59,14 @@ public class Player {
         return true;
     }
 
+    public void call() {
+        long diff = Game.maxStake - stake;
+        if (setPlayerStake(diff)) {
+            System.out.println("Call is correct");
+        } else {
+            System.out.println("You can not call");
+        }
+    }
 
     public boolean isSmallBlind() {
         if (smallBlind)
@@ -70,16 +81,7 @@ public class Player {
         cards.add(deck.getCard(id));
     }
 
-    public void call() {
-        long diff = Game.maxStake - stake;
-        if (setPlayerStake(diff)) {
-            System.out.println("Call is correct");
-        } else {
-            System.out.println("You can not call");
-        }
-    }
-
-    public void raise(long raiseVal) {
+    public void raise() {
 
     }
 
