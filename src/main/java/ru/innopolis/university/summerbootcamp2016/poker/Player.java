@@ -7,6 +7,7 @@ public class Player {
     private String name;
     private long stake;
     private long balance;
+    private long id;//starts from 2, 1 is a Table
     private List<Card> cards;
 
     public String getName() {
@@ -33,18 +34,46 @@ public class Player {
         this.stake = stake;
     }
 
+    //Method returns stake and resets it
     public long collectPlayerStake(){
-        this.balance -= stake;
-        return this.stake;
+        int s = stake;
+        stake=0;
+        return s;
     }
-
+    //Function set stake and subtract balance if stake < balance
     public boolean setPlayerStake(long stake){
         if (stake > this.balance){
             return false;
         }
+        this.stake = stake;
+        this.balance-=stake;
+        if(this.stake>Game.maxStake){
+            Game.maxStake = this.stake;
+        }
         return true;
     }
 
+    public void call(){
+        long diff = maxStake - stake;
+        if(setPlayerStake(diff)){
+            System.out.println("Call is correct");
+        }
+        else{
+            System.out.println("You can not call");
+        }
+    }
+
+    public void raise(){
+
+    }
+
+    public void check(){
+
+    }
+
+    public void fold(){
+
+    }
     @Override
     public String toString() {
         return "Player{" +

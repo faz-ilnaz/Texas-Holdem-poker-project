@@ -3,6 +3,7 @@ package ru.innopolis.university.summerbootcamp2016.poker;
 public class Game {
 
     static int amountCardsTable;
+    static int maxStake=0; //the highest stake of the round
 
     public void showArrayDeck(Deck deck) {
         for (int i = 0; i < 4; i++) {
@@ -23,5 +24,11 @@ public class Game {
         System.out.println(amountCardsTable);
 
 
+    }
+
+    public int CombinationChecker(Deck thisDeck, int playerId){
+        int[] valueArray = new int[13];
+        int[] suitArray = new int[4];
+        return 1;
     }
 }
