@@ -11,7 +11,7 @@ public class Bank {
         this.bankBalance += bankBalance;
     }
     public long getReward(){
-        int bal = this.bankBalance;
+        long bal = this.bankBalance;
         this.bankBalance = 0;
         return bal;
     }
