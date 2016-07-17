@@ -11,6 +11,13 @@ public class Player {
     private int id;//starts from 2, 1 is a Table
     private boolean smallBlind = false;
     private List<Card> cards;
+    private int strengthOfHand;
+    private boolean isPlaying;
+
+    public boolean isPlaying() {   return isPlaying;   }
+
+    public void setPlaying(boolean playing) {    isPlaying = playing;    }
+
 
     public String getName() {
         return name;
@@ -39,6 +46,10 @@ public class Player {
     public List<Card> getCards() {
         return cards;
     }
+
+    public void setStrength(int strength){this.strengthOfHand = strength;}
+
+    public int getStrength(){return strengthOfHand;}
 
     public void setCards(List<Card> cards) {
         this.cards = cards;
