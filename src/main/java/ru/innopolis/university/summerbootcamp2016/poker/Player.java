@@ -8,7 +8,7 @@ public class Player {
     private String name;
     private long stake;
     private long balance;
-    private int id;//starts from 2, 1 is a Table
+    private  id;//starts from 2, 1 is a Table
     private boolean smallBlind = false;
     private List<Card> cards;
 
