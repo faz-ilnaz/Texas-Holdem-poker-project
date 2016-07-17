@@ -1,9 +1,17 @@
 package ru.innopolis.university.summerbootcamp2016.poker;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 public class Game {
 
     static int amountCardsTable;
     static long maxStake=0; //the highest stake of the round
+
+    public static final long SMALL_BLIND = 1;
+    public static final int AMOUNT_OF_PLAYERS = 3;
+    public static final int DEFALT_BALANCE = 100;
 
     public void showArrayDeck(Deck deck) {
         for (int i = 0; i < 4; i++) {
@@ -19,7 +27,27 @@ public class Game {
         Deck currentDeck = new Deck();
         Table currentTable = new Table();
         amountCardsTable = 0;
+
+        List<Player> players = new ArrayList<Player>(AMOUNT_OF_PLAYERS);
+        for (int i = 2; i < AMOUNT_OF_PLAYERS + 2; i++) {
+            Player player = new Player();
+            player.setId(i);
+            player.setName("Player" + i);
+            player.setBalance(DEFALT_BALANCE);
+            players.add(player);
+        }
+
+        Random random = new Random();
+        int realPlayerId = random.nextInt(AMOUNT_OF_PLAYERS);
+
+        players.get(0).makeStake(SMALL_BLIND);
+        players.get(1).makeStake(2 * SMALL_BLIND);
+
+
+
+
         currentTable.takeFlop(currentDeck);
+
         currentTable.showTable();
         System.out.println(amountCardsTable);
 

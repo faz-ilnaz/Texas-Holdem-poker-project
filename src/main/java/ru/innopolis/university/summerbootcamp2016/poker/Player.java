@@ -46,8 +46,9 @@ public class Player {
         stake = 0;
         return s;
     }
+
     //Function set stake and subtract balance if stake < balance
-    public boolean setPlayerStake(long stake) {
+    public boolean makeStake(long stake) {
         if (stake > this.balance) {
             return false;
         }
@@ -61,7 +62,7 @@ public class Player {
 
     public void call() {
         long diff = Game.maxStake - stake;
-        if (setPlayerStake(diff)) {
+        if (makeStake(diff)) {
             System.out.println("Call is correct");
         } else {
             System.out.println("You can not call");
