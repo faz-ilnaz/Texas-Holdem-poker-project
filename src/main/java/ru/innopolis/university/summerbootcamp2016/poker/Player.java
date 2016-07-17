@@ -9,16 +9,20 @@ public class Player {
     private long stake;
     private long balance;
     private int id;//starts from 2, 1 is a Table
-    private boolean smallBlind=false;
+    private boolean smallBlind = false;
     private List<Card> cards;
 
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public void setName(String name) { this.name = name; }
+
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id; }
+
+    public long getBalance() { return balance; }
+
+    public void setBalance(long balance) { this.balance = balance; }
 
     public List<Card> getCards() {
         return cards;
@@ -37,58 +41,59 @@ public class Player {
     }
 
     //Method returns stake and resets it
-    public long collectPlayerStake(){
+    public long collectPlayerStake() {
         long s = stake;
-        stake=0;
+        stake = 0;
         return s;
     }
+
     //Function set stake and subtract balance if stake < balance
-    public boolean setPlayerStake(long stake){
-        if (stake > this.balance){
+    public boolean setPlayerStake(long stake) {
+        if (stake > this.balance) {
             return false;
         }
         this.stake = stake;
-        this.balance-=stake;
-        if(this.stake>Game.maxStake){
+        this.balance -= stake;
+        if (this.stake > Game.maxStake) {
             Game.maxStake = this.stake;
         }
         return true;
     }
 
-    public void call(){
+    public void call() {
         long diff = Game.maxStake - stake;
-        if(setPlayerStake(diff)){
+        if (setPlayerStake(diff)) {
             System.out.println("Call is correct");
-        }
-        else{
+        } else {
             System.out.println("You can not call");
         }
     }
 
-    public boolean isSmallBlind(){
-        if(smallBlind)
+    public boolean isSmallBlind() {
+        if (smallBlind)
             return true;
         else
             return false;
     }
 
-    public void takeCards(Deck deck){
+    public void takeCards(Deck deck) {
         cards = new ArrayList<Card>();
         cards.add(deck.getCard(id));
         cards.add(deck.getCard(id));
     }
 
-    public void raise(){
+    public void raise() {
 
     }
 
-    public void check(){
+    public void check() {
 
     }
 
-    public void fold(){
+    public void fold() {
 
     }
+
     @Override
     public String toString() {
         return "Player{" +
