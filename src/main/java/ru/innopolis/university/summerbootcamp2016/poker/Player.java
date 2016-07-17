@@ -8,7 +8,7 @@ public class Player {
     private String name;
     private long stake;
     private long balance;
-    private  id;//starts from 2, 1 is a Table
+    private  int id;//starts from 2, 1 is a Table
     private boolean smallBlind = false;
     private List<Card> cards;
 
@@ -91,6 +91,12 @@ public class Player {
 
     public void fold() {
 
+    }
+
+    public void printCards(){
+        for(int i=0;i<cards.size();i++){
+            System.out.println(cards.get(i).getValue()+" "+cards.get(i).getValue());
+        }
     }
 
     @Override
