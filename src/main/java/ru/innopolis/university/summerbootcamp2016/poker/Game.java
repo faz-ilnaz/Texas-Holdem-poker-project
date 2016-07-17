@@ -26,6 +26,7 @@ public class Game {
     public static void main(String[] args) {
         Deck currentDeck = new Deck();
         Table currentTable = new Table();
+        Bank bank = new Bank();
         amountCardsTable = 0;
 
         List<Player> players = new ArrayList<Player>(AMOUNT_OF_PLAYERS);
@@ -34,6 +35,7 @@ public class Game {
             player.setId(i);
             player.setName("Player" + i);
             player.setBalance(DEFALT_BALANCE);
+            player.takeCards(currentDeck);
             players.add(player);
         }
 
@@ -43,17 +45,23 @@ public class Game {
         players.get(0).makeStake(SMALL_BLIND);
         players.get(1).makeStake(2 * SMALL_BLIND);
 
-
-
+        players.get(2).call();
+        players.get(0).raise(19 );
+        players.get(1).call();
+        players.get(2).call();
+        bank.collectStakes(players);
+        System.out.println("Bank Balance: " +bank.getBankBalance());
+        //Printing player's info
+        for (int i = 0; i < AMOUNT_OF_PLAYERS; i++) {
+            System.out.println("Player "+players.get(i).getId()+" " + players.get(i).getStake() + " "+ players.get(i).getBalance());
+            for(int j =0; j < 2; j++)
+                System.out.println(players.get(i).getCards().get(j).getSuit()+" "+players.get(i).getCards().get(j).getValue());
+        }
 
         currentTable.takeFlop(currentDeck);
 
-        currentTable.showTable();
-        Player pl1 = new Player();
-        pl1.takeCards(currentDeck);
-
-        pl1.printCards();
-        System.out.println(amountCardsTable);
+        //currentTable.showTable();
+        //System.out.println(amountCardsTable);
     }
 
 

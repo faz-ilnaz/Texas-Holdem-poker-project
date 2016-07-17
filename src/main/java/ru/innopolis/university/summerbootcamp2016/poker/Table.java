@@ -20,6 +20,7 @@ public class Table {
     }
 
     public void showTable(){
+        System.out.println("Table:");
         for(int i=0;i<cardsOnTable.size();i++){
             System.out.printf("%s   %s\n",cardsOnTable.get(i).getSuit(),cardsOnTable.get(i).getValue());
         }

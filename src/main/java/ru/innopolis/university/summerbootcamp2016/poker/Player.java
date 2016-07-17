@@ -52,21 +52,12 @@ public class Player {
         if (stake > this.balance) {
             return false;
         }
-        this.stake = stake;
+        this.stake += stake;
         this.balance -= stake;
         if (this.stake > Game.maxStake) {
             Game.maxStake = this.stake;
         }
         return true;
-    }
-
-    public void call() {
-        long diff = Game.maxStake - stake;
-        if (makeStake(diff)) {
-            System.out.println("Call is correct");
-        } else {
-            System.out.println("You can not call");
-        }
     }
 
     public boolean isSmallBlind() {
@@ -82,8 +73,27 @@ public class Player {
         cards.add(deck.getCard(id));
     }
 
-    public void raise() {
+    public void raise(long raise) {
+        if(raise>Game.maxStake-this.stake){
+            if(makeStake(raise)){
+                System.out.println("Raise is correct!");
+            }
+            else{
+                System.out.println("Balance is empty!");
+            }
+        }
+        else{
+            System.out.println("Raise can not be less than previus raise!");
+        }
+    }
+    public void call() {
+        long diff = Game.maxStake - stake;
 
+        if (makeStake(diff)) {
+            System.out.println("Call is correct");
+        } else {
+            System.out.println("You can not call");
+        }
     }
 
     public void check() {
