@@ -24,7 +24,7 @@ public class UI {
                 System.out.print(clubs);
                 break;
         }
-        System.out.print(card.getValue());
+        System.out.print(card.getValue()+"\n");
         }
 
     }

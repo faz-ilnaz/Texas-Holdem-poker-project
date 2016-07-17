@@ -9,10 +9,10 @@ public class Player {
     private long stake;
     private long balance;
     private int id;//starts from 2, 1 is a Table
-    private boolean smallBlind = false;
+    private boolean dealer = false;
     private List<Card> cards;
     private int strengthOfHand;
-    private boolean isPlaying;
+    private boolean isPlaying=true;
 
     public boolean isPlaying() {   return isPlaying;   }
 
@@ -83,8 +83,8 @@ public class Player {
         return true;
     }
 
-    public boolean isSmallBlind() {
-        if (smallBlind)
+    public boolean isDealer() {
+        if (dealer)
             return true;
         else
             return false;
@@ -101,7 +101,7 @@ public class Player {
             if (makeStake(raise)) {
                 System.out.println("Raise is correct!");
             } else {
-                System.out.println("Balance is empty!");
+                System.out.println("You can not make a raise! Not enought balance!");
             }
         } else {
             System.out.println("Raise can not be less than previus raise!");
@@ -122,18 +122,27 @@ public class Player {
         }
     }
 
-    public void check() {
-
+    // check() method returns true if you can make a check
+    public boolean check() {
+        if(this.stake==Game.maxStake)
+            return true;
+        else
+            return false;
     }
 
     public void fold() {
-
+        this.isPlaying = false;
     }
 
     public void printCards() {
         for (int i = 0; i < cards.size(); i++) {
-            System.out.println(cards.get(i).getSuit() + " " + cards.get(i).getValue());
+            UI.displayCard(cards.get(i));
+            //System.out.println(cards.get(i).getSuit() + " " + cards.get(i).getValue());
         }
+    }
+
+    public void printInfo(){
+        System.out.println("\nPlayer " + this.getId() + " " + this.getStake() + " " + this.getBalance());
     }
 
     @Override
