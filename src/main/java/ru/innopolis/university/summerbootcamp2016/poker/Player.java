@@ -3,6 +3,12 @@ package ru.innopolis.university.summerbootcamp2016.poker;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * The Player class. Contains not using methods cause they had been used before.
+ * Conatins all main functions of Player like call(), raise(), check(), fold()
+ * Also there are many helping methods
+ */
+
 public class Player {
 
     private String name;
@@ -144,7 +150,6 @@ public class Player {
     public void printCards() {
         for (int i = 0; i < cards.size(); i++) {
             UI.displayCard(cards.get(i));
-            //System.out.println(cards.get(i).getSuit() + " " + cards.get(i).getValue());
         }
     }
 

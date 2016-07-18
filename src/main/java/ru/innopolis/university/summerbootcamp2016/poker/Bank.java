@@ -2,6 +2,11 @@ package ru.innopolis.university.summerbootcamp2016.poker;
 
 import java.util.List;
 
+/*
+ * The class consists of Bank on the table
+ * And sending and returnig money methods
+ */
+
 public class Bank {
 
 

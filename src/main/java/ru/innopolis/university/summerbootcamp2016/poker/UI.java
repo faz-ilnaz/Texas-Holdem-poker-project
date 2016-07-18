@@ -2,6 +2,7 @@ package ru.innopolis.university.summerbootcamp2016.poker;
 
 /**
  * User Interface
+ * The class produces images of suits
  */
 public class UI {
     final private static String spades = "\u2660";

@@ -3,6 +3,11 @@ package ru.innopolis.university.summerbootcamp2016.poker;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * The Table class consists of cards on the table and methods
+ * that get cards from the deck
+ */
+
 public class Table {
     List<Card> cardsOnTable = new ArrayList<Card>();
     public final int id = 1;
@@ -23,7 +28,6 @@ public class Table {
         System.out.println("Table:");
         for (int i = 0; i < cardsOnTable.size(); i++) {
             UI.displayCard(cardsOnTable.get(i));
-            //System.out.printf("%s   %s\n",cardsOnTable.get(i).getSuit(),cardsOnTable.get(i).getValue());
         }
     }
 
