@@ -9,6 +9,9 @@ public class Game {
     static int amountCardsTable;
     static long maxStake = 0; //the highest stake of the round
 
+    static Random random = new Random();
+    static int realPlayerId;
+
     public static final long SMALL_BLIND = 1;
     public static final int AMOUNT_OF_PLAYERS = 3;
     public static final int DEFALT_BALANCE = 100;
@@ -34,36 +37,62 @@ public class Game {
             players.add(player);
         }
 
+
+        int dealerId = random.nextInt(AMOUNT_OF_PLAYERS);
+        players.get(dealerId).setDealer(true);
+
         //Show init info
         System.out.println("Init player's info:");
         showPlayerInfo(players);
 
-        Random random = new Random();
-        int realPlayerId = random.nextInt(AMOUNT_OF_PLAYERS);
 
-        players.get(0).makeStake(SMALL_BLIND);
-        players.get(1).makeStake(2 * SMALL_BLIND);
+        int smallBlindId = (dealerId + 1) % AMOUNT_OF_PLAYERS;
+        int bigBlindId = (smallBlindId + 1) % AMOUNT_OF_PLAYERS;
+
+        players.get(smallBlindId).makeStake(SMALL_BLIND);
+        players.get(bigBlindId).makeStake(2 * SMALL_BLIND);
 
         //Show info after setting blinds
         System.out.println("After blind's info:");
         showPlayerInfo(players);
 
-        players.get(2).call();
-        players.get(0).raise(20);
-        players.get(1).call();
-        players.get(2).call();
-        players.get(0).check();
+        realPlayerId = random.nextInt(AMOUNT_OF_PLAYERS);
 
-        //Printing player's info
+        int theNextPlayerId = (bigBlindId + 1) % AMOUNT_OF_PLAYERS;
 
-        //Show info after some actions
-        System.out.println("After actions info:");
-        showPlayerInfo(players);
+        while (biddingStepIsGoingOn(theNextPlayerId,  players)) {
 
-        bank.collectStakes(players);
-        System.out.println("Bank Balance after collecting Stakes: " + bank.getBankBalance());
+            Player player = players.get(theNextPlayerId);
 
-        currentTable.takeFlop(currentDeck);
+            if (theNextPlayerId == realPlayerId) {
+                playMyself(player);
+            } else {
+                playAI(player);
+            }
+
+            do {
+                theNextPlayerId = (theNextPlayerId + 1) % AMOUNT_OF_PLAYERS;
+            }
+            while (!players.get(theNextPlayerId).isPlaying());
+        }
+
+
+
+
+//        players.get(1).call();
+//        players.get(2).call();
+//        players.get(0).check();
+//
+//        //Printing player's info
+//
+//        //Show info after some actions
+//        System.out.println("After actions info:");
+//        showPlayerInfo(players);
+//
+//        bank.collectStakes(players);
+//        System.out.println("Bank Balance after collecting Stakes: " + bank.getBankBalance());
+
+//        currentTable.takeFlop(currentDeck);
 
 
         //Testing things
@@ -71,9 +100,36 @@ public class Game {
         //currentTable.showTable();
         //Testing things
         //testCombinationChecker(3);
-        currentTable.showTable();
+//        currentTable.showTable();
         //System.out.println(amountCardsTable);
     }
+
+    static void playMyself(Player player) {
+        if (!player.call()) {
+            player.check();
+        }
+
+    }
+
+    static void playAI(Player player) {
+        if (!player.call()) {
+            player.check();
+        }
+    }
+
+
+
+    static boolean biddingStepIsGoingOn(int theNextPlayerId, List<Player> players) {
+        for (Player player : players) {
+            if (player.getPlayingStatus() == 0 || (player.getPlayingStatus() != -1 && player.getStake() != Game.maxStake )) {
+                return true;
+            }
+        }
+
+        return false;
+
+    }
+
 
     /*
         Under you can find helping methods and combination checker methods
