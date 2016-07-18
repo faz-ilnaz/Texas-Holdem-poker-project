@@ -18,19 +18,33 @@ public class Player {
     private boolean dealer = false;
     private List<Card> cards;
     private int strengthOfHand;
-    private boolean isPlaying = true;
 
-    public boolean isPlaying() {
-        return isPlaying;
+    /**
+     * 0 - step was not made in current stage
+     * 1 - step was made in current stage
+     * -1 - player folded his cards
+     */
+    private int playingStatus = 0;
+
+
+    boolean isPlaying() {
+        return playingStatus != -1;
     }
 
-    public void setPlaying(boolean playing) {
-        isPlaying = playing;
+    public int getPlayingStatus() {
+        return playingStatus;
     }
 
+    public void setPlayingStatus(int playingStatus) {
+        this.playingStatus = playingStatus;
+    }
 
     public String getName() {
         return name;
+    }
+
+    public void setDealer(boolean dealer) {
+        this.dealer = dealer;
     }
 
     public void setName(String name) {
@@ -113,6 +127,7 @@ public class Player {
     public void raise(long raise) {
         if (raise > Game.maxStake - this.stake) {
             if (makeStake(raise)) {
+                playingStatus = 1;
                 System.out.println("Raise is correct!");
             } else {
                 System.out.println("You can not make a raise! Not enought balance!");
@@ -122,29 +137,37 @@ public class Player {
         }
     }
 
-    public void call() {
+    public boolean call() {
         long diff = Game.maxStake - stake;
         if (diff != 0) {
             if (makeStake(diff)) {
+                playingStatus = 1;
                 System.out.println("Call is correct");
+                return true;
             } else {
                 System.out.println("You can not call");
+                return false;
             }
         } else {
             System.out.println("You can not make a call! Your stake is the same!");
+            return false;
         }
     }
 
     // check() method returns true if you can make a check
     public boolean check() {
-        if (this.stake == Game.maxStake)
+        if (this.stake == Game.maxStake) {
+            playingStatus = 1;
             return true;
-        else
+        } else {
+            System.out.println("You can not make a check! Your stake is not equal to max value!");
             return false;
+        }
     }
 
-    public void fold() {
-        this.isPlaying = false;
+    public boolean fold() {
+        this.playingStatus = -1;
+        return true;
     }
 
     public void printCards() {
@@ -154,7 +177,8 @@ public class Player {
     }
 
     public void printInfo() {
-        System.out.println("\nPlayer " + this.getId() + " Stake:" + this.getStake() + " Balance:" + this.getBalance());
+        System.out.println("\nPlayer " + this.getId() + " Stake:" + this.getStake() + " Balance:" + this.getBalance() +
+        " IsDealer: " + dealer);
     }
 
     @Override
