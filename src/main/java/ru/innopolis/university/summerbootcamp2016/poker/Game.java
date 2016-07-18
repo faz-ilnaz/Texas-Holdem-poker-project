@@ -135,25 +135,43 @@ public class Game {
         return numberOfTwos;
     }
 
-    //It returns the strength of best possible combination. 10 - Royal flush, 1 - high card
-    public static int combinationChecker(Deck thisDeck, int playerId) {
-        int[] valueArray = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-        int[] suitArray = new int[]{0, 0, 0, 0};
+    // It counts and marks cards that are used in combination checker. Returns max cards of one suit and one value
+    public static int[] combinationArray(int[] vArray, int[] sArray, Deck thisDeck,int playerId) {
         int maxS = 0, maxV = 0;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 13; j++) {
                 if (thisDeck.deck[i][j] == 1 || thisDeck.deck[i][j] == playerId) {
-                    suitArray[i]++;
-                    valueArray[j]++;
-                    if (maxS < suitArray[i]) {
-                        maxS = suitArray[i];
+                    sArray[i]++;
+                    vArray[j]++;
+                    if (maxS < sArray[i]) {
+                        maxS = sArray[i];
                     }
-                    if (maxV < valueArray[j]) {
-                        maxV = valueArray[j];
+                    if (maxV < vArray[j]) {
+                        maxV = vArray[j];
                     }
                 }
             }
         }
+        int[] max = new int[]{maxS,maxV};
+        return max;
+    }
+
+    //It just rewrite abstract variable only if future value is bigger
+    public static int rewriteH(int h, int valueToCompare){
+        if(h<valueToCompare){
+            return valueToCompare;
+        }
+        else
+            return h;
+    }
+
+    //It returns the strength of best possible combination. 10 - Royal flush, 1 - high card
+    public static int combinationChecker(Deck thisDeck, int playerId) {
+        int[] valueArray = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        int[] suitArray = new int[]{0, 0, 0, 0};
+        int[] max = combinationArray(valueArray,suitArray,thisDeck,playerId);
+        int maxS=max[0];
+        int maxV=max[1];
 
         int highStraight = olderCardStraight(valueArray);
 
@@ -161,50 +179,36 @@ public class Game {
         switch (maxS) {
             case 5:
                 if (highStraight == 12) {
-                    if (strengthOfCombination < 10)
-                        strengthOfCombination = 10;
+                    strengthOfCombination = rewriteH(strengthOfCombination,10);
                 } else if (highStraight > -1) {
-                    if (strengthOfCombination < 9)
-                        strengthOfCombination = 9;
+                    strengthOfCombination = rewriteH(strengthOfCombination, 9);
                 } else {
-                    if (strengthOfCombination < 6)
-                        strengthOfCombination = 6;
+                    strengthOfCombination = rewriteH(strengthOfCombination,6);
                 }
             default:
                 switch (maxV) {
                     case 4:
-                        if (strengthOfCombination < 8)
-                            strengthOfCombination = 8;
+                        strengthOfCombination = rewriteH(strengthOfCombination, 8);
                     case 3:
                         if (numberOfTwos(valueArray) >= 1) {
-                            if (strengthOfCombination < 7)
-                                strengthOfCombination = 7;
+                            strengthOfCombination = rewriteH(strengthOfCombination,7);
                         } else {
-                            if (strengthOfCombination < 4)
-                                strengthOfCombination = 4;
+                            strengthOfCombination = rewriteH(strengthOfCombination, 4);
                         }
                     case 2:
                         if (numberOfTwos(valueArray) >= 2) {
-                            if (strengthOfCombination < 3)
-                                strengthOfCombination = 3;
+                            strengthOfCombination = rewriteH(strengthOfCombination, 3);
                         } else {
-                            if (strengthOfCombination < 2)
-                                strengthOfCombination = 2;
+                            strengthOfCombination = rewriteH(strengthOfCombination, 2);
                         }
                     case 1:
                         if (highStraight > -1) {
-                            if (strengthOfCombination < 5)
-                                strengthOfCombination = 5;
+                            strengthOfCombination = rewriteH(strengthOfCombination,5);
                         } else {
-                            if (strengthOfCombination < 1)
-                                strengthOfCombination = 1;
+                            strengthOfCombination = rewriteH(strengthOfCombination, 1);
                         }
-
-
                 }
-
         }
-
         return strengthOfCombination;
     }
 
