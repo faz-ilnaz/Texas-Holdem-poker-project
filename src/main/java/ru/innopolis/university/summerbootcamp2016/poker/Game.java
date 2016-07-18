@@ -73,6 +73,8 @@ public class Game {
         //testCombinationChecker(3);
         currentTable.showTable();
         //System.out.println(amountCardsTable);
+        System.out.println("Test confidence:");
+        testConfidence(6);
     }
 
     /*
@@ -94,6 +96,23 @@ public class Game {
         PokerHand testHand = PokerHand.values()[10 - combination];
         System.out.println(combination);
         System.out.println(testHand);
+    }
+
+    //This is a test for calculating confidence of AI. It creates new deck and takes 7 cards from it (3-5 for table, 2 for player). Then calculates confidence.
+    public static void testConfidence(int id) {
+        Deck deckTest = new Deck();
+        Player testPlayer = new Player();
+        testPlayer.setId(id);
+        UI.displayCard(deckTest.getCard(1));
+        UI.displayCard(deckTest.getCard(1));
+        UI.displayCard(deckTest.getCard(1));
+        UI.displayCard(deckTest.getCard(1));
+        UI.displayCard(deckTest.getCard(1));
+        UI.displayCard(deckTest.getCard(id));
+        UI.displayCard(deckTest.getCard(id));
+        System.out.println();
+        AI.makeDecision(testPlayer,deckTest);
+
     }
 
     //This function shows deck array
@@ -216,7 +235,7 @@ public class Game {
     public static void openCards(ArrayList<Player> allPlayers, Deck thisDeck) {
         for (int i = 0; i < allPlayers.size(); i++) {
             if (allPlayers.get(i).isPlaying()) {
-                allPlayers.get(i).setStrength(combinationChecker(thisDeck, allPlayers.get(i).getId()));
+                allPlayers.get(i).setStrength(combinationChecker(thisDeck, allPlayers.get(i).getId()));  //it works!
             }
         }
     }
