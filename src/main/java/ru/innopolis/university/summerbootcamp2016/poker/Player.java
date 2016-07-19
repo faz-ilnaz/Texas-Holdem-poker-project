@@ -5,7 +5,7 @@ import java.util.List;
 
 /*
  * The Player class. Contains not using methods cause they had been used before.
- * Conatins all main functions of Player like call(), raise(), check(), fold()
+ * Contains all main functions of Player like call(), raise(), check(), fold()
  * Also there are many helping methods
  */
 
@@ -37,6 +37,10 @@ public class Player {
 
     public void setPlayingStatus(int playingStatus) {
         this.playingStatus = playingStatus;
+    }
+
+    public void resetPlayingStatus() {
+        this.playingStatus = 0;
     }
 
     public String getName() {
@@ -124,16 +128,19 @@ public class Player {
         cards.add(deck.getCard(id));
     }
 
-    public void raise(long raise) {
+    public boolean raise(long raise) {
         if (raise > Game.maxStake - this.stake) {
             if (makeStake(raise)) {
                 playingStatus = 1;
                 System.out.println("Raise is correct!");
+                return true;
             } else {
-                System.out.println("You can not make a raise! Not enought balance!");
+                System.out.println("You can not make a raise! Not enough balance!");
+                return false;
             }
         } else {
-            System.out.println("Raise can not be less than previus raise!");
+            System.out.println("Raise can not be less than previous raise!");
+            return false;
         }
     }
 

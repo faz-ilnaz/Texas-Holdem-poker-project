@@ -3,6 +3,7 @@ package ru.innopolis.university.summerbootcamp2016.poker;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Game {
 
@@ -11,10 +12,11 @@ public class Game {
 
     static Random random = new Random();
     static int realPlayerId;
+    static Scanner scanner = new Scanner(System.in);
 
     public static final long SMALL_BLIND = 1;
     public static final int AMOUNT_OF_PLAYERS = 3;
-    public static final int DEFALT_BALANCE = 100;
+    public static final int DEFAULT_BALANCE = 100;
 
 
     public static void main(String[] args) {
@@ -27,12 +29,14 @@ public class Game {
          * Testing of correct working of objects, their methods and collaboration of objects
          */
 
-        List<Player> players = new ArrayList<Player>(AMOUNT_OF_PLAYERS);
+        List<Player> players = new ArrayList<>(AMOUNT_OF_PLAYERS);
         for (int i = 2; i < AMOUNT_OF_PLAYERS + 2; i++) {
             Player player = new Player();
             player.setId(i);
             player.setName("Player" + i);
-            player.setBalance(DEFALT_BALANCE);
+            player.setBalance(DEFAULT_BALANCE);
+            player.resetPlayingStatus();
+            player.setStrength(0);
             player.takeCards(currentDeck);
             players.add(player);
         }
@@ -60,28 +64,70 @@ public class Game {
 
         int theNextPlayerId = (bigBlindId + 1) % AMOUNT_OF_PLAYERS;
 
-        while (biddingStepIsGoingOn(theNextPlayerId,  players)) {
+        for (int i = 0; i < 4; i++) {
 
-            Player player = players.get(theNextPlayerId);
+            while (biddingStepIsGoingOn(theNextPlayerId, players)) {
 
-            if (theNextPlayerId == realPlayerId) {
+                Player player = players.get(theNextPlayerId);
+
                 playMyself(player);
-            } else {
-                playAI(player);
+
+//                if (theNextPlayerId == realPlayerId) {
+//                    playMyself(player);
+//                }
+//                else {
+//                    playAI(player);
+//                }
+
+                do {
+                    theNextPlayerId = (theNextPlayerId + 1) % AMOUNT_OF_PLAYERS;
+                }
+                while (!players.get(theNextPlayerId).isPlaying());
             }
 
-            do {
+            int countOfActivePlayers = 0;
+            for (Player player : players) {
+                if (player.isPlaying()) {
+                    countOfActivePlayers++;
+                }
+            }
+
+            bank.collectStakes(players);
+
+            if (countOfActivePlayers < 2) {
+                break;
+            }
+
+            // was a preflop
+            if (i == 0) {
+                currentTable.takeFlop(currentDeck);
+            } else if (i < 3) {
+                // river, turn
+                currentTable.takeCard(currentDeck);
+            }
+
+            theNextPlayerId = (dealerId + 1) % AMOUNT_OF_PLAYERS;
+            while (!players.get(theNextPlayerId).isPlaying()) {
                 theNextPlayerId = (theNextPlayerId + 1) % AMOUNT_OF_PLAYERS;
             }
-            while (!players.get(theNextPlayerId).isPlaying());
+
+            maxStake = 0;
+            resetPlayersStatuses(players);
+            currentTable.showTable();
         }
 
+        showArrayDeck(currentDeck);
 
+        openCards(players, currentDeck);
+        List<Player> winners = determineWinners(players);
+        long reward = bank.getReward();
 
+        System.out.println("--- WINNERS ---");
+        for (Player winner : winners) {
+            winner.setBalance(winner.getBalance() + reward / winners.size());
+            System.out.println(winner.getName());
+        }
 
-//        players.get(1).call();
-//        players.get(2).call();
-//        players.get(0).check();
 //
 //        //Printing player's info
 //
@@ -102,13 +148,40 @@ public class Game {
         //testCombinationChecker(3);
 //        currentTable.showTable();
         //System.out.println(amountCardsTable);
-        System.out.println("Test confidence:");
-        testConfidence(6);
+//        System.out.println("Test confidence:");
+//        testConfidence(6);
     }
 
     static void playMyself(Player player) {
-        if (!player.call()) {
-            player.check();
+        boolean status = false;
+        System.out.println(player.getName() + ": ");
+
+        while (!status) {
+            String[] commands = scanner.nextLine().trim().split(" ");
+            String command = commands[0];
+            long value = 0;
+            if (commands.length > 1) {
+                value = Long.parseLong(commands[1]);
+            }
+
+
+
+            switch (command) {
+                case "call":
+                    status = player.call();
+                    break;
+                case "raise":
+                    status = player.raise(value);
+                    break;
+                case "check":
+                    status = player.check();
+                    break;
+                case "fold":
+                    status = player.fold();
+                    break;
+                default:
+                    System.out.println("Incorrect command!");
+            }
         }
 
     }
@@ -120,10 +193,9 @@ public class Game {
     }
 
 
-
     static boolean biddingStepIsGoingOn(int theNextPlayerId, List<Player> players) {
         for (Player player : players) {
-            if (player.getPlayingStatus() == 0 || (player.getPlayingStatus() != -1 && player.getStake() != Game.maxStake )) {
+            if (player.getPlayingStatus() == 0 || (player.getPlayingStatus() != -1 && player.getStake() != Game.maxStake)) {
                 return true;
             }
         }
@@ -167,12 +239,12 @@ public class Game {
         UI.displayCard(deckTest.getCard(id));
         UI.displayCard(deckTest.getCard(id));
         System.out.println();
-        AI.makeDecision(testPlayer,deckTest);
+        AI.makeDecision(testPlayer, deckTest);
 
     }
 
     //This function shows deck array
-    public void showArrayDeck(Deck deck) {
+    public static void showArrayDeck(Deck deck) {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 13; j++) {
                 System.out.print(deck.deck[i][j] + " ");
@@ -211,7 +283,7 @@ public class Game {
     }
 
     // It counts and marks cards that are used in combination checker. Returns max cards of one suit and one value
-    public static int[] combinationArray(int[] vArray, int[] sArray, Deck thisDeck,int playerId) {
+    public static int[] combinationArray(int[] vArray, int[] sArray, Deck thisDeck, int playerId) {
         int maxS = 0, maxV = 0;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 13; j++) {
@@ -227,16 +299,15 @@ public class Game {
                 }
             }
         }
-        int[] max = new int[]{maxS,maxV};
+        int[] max = new int[]{maxS, maxV};
         return max;
     }
 
     //It just rewrite abstract variable only if future value is bigger
-    public static int rewriteH(int h, int valueToCompare){
-        if(h<valueToCompare){
+    public static int rewriteH(int h, int valueToCompare) {
+        if (h < valueToCompare) {
             return valueToCompare;
-        }
-        else
+        } else
             return h;
     }
 
@@ -244,9 +315,9 @@ public class Game {
     public static int combinationChecker(Deck thisDeck, int playerId) {
         int[] valueArray = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         int[] suitArray = new int[]{0, 0, 0, 0};
-        int[] max = combinationArray(valueArray,suitArray,thisDeck,playerId);
-        int maxS=max[0];
-        int maxV=max[1];
+        int[] max = combinationArray(valueArray, suitArray, thisDeck, playerId);
+        int maxS = max[0];
+        int maxV = max[1];
 
         int highStraight = olderCardStraight(valueArray);
 
@@ -254,11 +325,11 @@ public class Game {
         switch (maxS) {
             case 5:
                 if (highStraight == 12) {
-                    strengthOfCombination = rewriteH(strengthOfCombination,10);
+                    strengthOfCombination = rewriteH(strengthOfCombination, 10);
                 } else if (highStraight > -1) {
                     strengthOfCombination = rewriteH(strengthOfCombination, 9);
                 } else {
-                    strengthOfCombination = rewriteH(strengthOfCombination,6);
+                    strengthOfCombination = rewriteH(strengthOfCombination, 6);
                 }
             default:
                 switch (maxV) {
@@ -266,7 +337,7 @@ public class Game {
                         strengthOfCombination = rewriteH(strengthOfCombination, 8);
                     case 3:
                         if (numberOfTwos(valueArray) >= 1) {
-                            strengthOfCombination = rewriteH(strengthOfCombination,7);
+                            strengthOfCombination = rewriteH(strengthOfCombination, 7);
                         } else {
                             strengthOfCombination = rewriteH(strengthOfCombination, 4);
                         }
@@ -278,7 +349,7 @@ public class Game {
                         }
                     case 1:
                         if (highStraight > -1) {
-                            strengthOfCombination = rewriteH(strengthOfCombination,5);
+                            strengthOfCombination = rewriteH(strengthOfCombination, 5);
                         } else {
                             strengthOfCombination = rewriteH(strengthOfCombination, 1);
                         }
@@ -288,7 +359,7 @@ public class Game {
     }
 
     //count the strength of all combinations of Players still playing
-    public static void openCards(ArrayList<Player> allPlayers, Deck thisDeck) {
+    public static void openCards(List<Player> allPlayers, Deck thisDeck) {
         for (int i = 0; i < allPlayers.size(); i++) {
             if (allPlayers.get(i).isPlaying()) {
                 allPlayers.get(i).setStrength(combinationChecker(thisDeck, allPlayers.get(i).getId()));  //it works!
@@ -297,8 +368,8 @@ public class Game {
     }
 
     //returns list of winners (or list with one winner) in this turn
-    public static ArrayList<Player> determineWinners(ArrayList<Player> allPlayers) {
-        ArrayList<Player> winners = new ArrayList<Player>();
+    public static List<Player> determineWinners(List<Player> allPlayers) {
+        List<Player> winners = new ArrayList<Player>();
         int maxStrength = 0;
         int currentStrength;
         for (int i = 0; i < allPlayers.size(); i++) {
@@ -312,6 +383,15 @@ public class Game {
             }
         }
         return winners;
+    }
+
+    static void resetPlayersStatuses(List<Player> players) {
+        for (Player player : players) {
+            if (player.getPlayingStatus() != -1) {
+                player.resetPlayingStatus();
+            }
+            player.setStrength(0);
+        }
     }
 
 }
