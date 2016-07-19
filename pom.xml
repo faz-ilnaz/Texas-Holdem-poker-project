@@ -23,7 +23,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.2.1</version>
                 <configuration>
-                    <mainClass>ru.innopolis.university.summerbootcamp2016.lab7.Main</mainClass>
+                    <mainClass>ru.innopolis.university.summerbootcamp2016.poker.Game</mainClass>
                 </configuration>
             </plugin>
         </plugins>
