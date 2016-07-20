@@ -8,7 +8,7 @@ package ru.innopolis.university.summerbootcamp2016.poker;
         int[] valueArray = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         int[] suitArray = new int[]{0, 0, 0, 0};
         int maxV; int maxS;
-        int[] max = Game.combinationArray(valueArray,suitArray,deck,player.getId());
+        int[] max = RankingUtils.combinationArray(valueArray,suitArray,deck,player.getId());
         maxS=max[0];
         maxV=max[1];
         int k1=4, k2=2;
