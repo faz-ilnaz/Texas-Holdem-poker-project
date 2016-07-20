@@ -57,18 +57,28 @@ package ru.innopolis.university.summerbootcamp2016.poker;
             player.fold();
         }
         else if(confidence<mediumConfidence){
-            if(Game.maxStake==0){
+            if(Game.maxStake==player.getStake()){
                 player.check();
             }
             else {
-                player.call();
+                if (Game.maxStake - player.getStake() > player.getBalance()/10) {
+                    player.fold();
+                } else {
+                    player.call();
+                }
             }
         }
         else if(confidence<highConfidence){
-            player.raise(Game.maxStake+player.getBalance()/20);
+            if(Game.maxStake - player.getStake() > player.getBalance()/20)
+                player.call();
+            else
+                player.raise(player.getBalance()/20);
         }
         else{
-            player.raise(Game.maxStake+player.getBalance()/10);
+            if(Game.maxStake - player.getStake() > player.getBalance()/10)
+                player.call();
+            else
+                player.raise(player.getBalance()/10);
         }
     }
 }

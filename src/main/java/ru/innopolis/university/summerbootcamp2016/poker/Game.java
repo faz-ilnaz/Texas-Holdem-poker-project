@@ -109,9 +109,9 @@ public class Game {
 
             showArrayDeck(currentDeck);
 
-            openCards(players, currentDeck);
-            List<Player> winners = RankingUtils.determineWinners(players);
-            long reward = bank.getReward();
+        RankingUtils.openCards(players, currentDeck);
+        List<Player> winners = RankingUtils.determineWinners(players);
+        long reward = bank.getReward();
 
             System.out.println("--- WINNERS ---");
             for (Player winner : winners) {

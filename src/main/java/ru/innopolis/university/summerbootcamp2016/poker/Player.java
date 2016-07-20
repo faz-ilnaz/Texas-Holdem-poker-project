@@ -17,7 +17,17 @@ public class Player {
     private int id;//starts from 2, 1 is a Table
     private boolean dealer = false;
     private List<Card> cards;
-    private int strengthOfHand;
+    private float strengthOfHand;
+
+    public int getStrengthOfHighestCard() {
+        return strengthOfHighestCard;
+    }
+
+    public void setStrengthOfHighestCard(int strengthOfHighestCard) {
+        this.strengthOfHighestCard = strengthOfHighestCard;
+    }
+
+    private int strengthOfHighestCard;
 
     /**
      * 0 - step was not made in current stage
@@ -75,11 +85,11 @@ public class Player {
         return cards;
     }
 
-    public void setStrength(int strength) {
+    public void setStrength(float strength) {
         this.strengthOfHand = strength;
     }
 
-    public int getStrength() {
+    public float getStrength() {
         return strengthOfHand;
     }
 
