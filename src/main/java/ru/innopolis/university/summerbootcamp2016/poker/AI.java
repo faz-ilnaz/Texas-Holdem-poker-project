@@ -72,13 +72,13 @@ package ru.innopolis.university.summerbootcamp2016.poker;
             if(Game.maxStake - player.getStake() > player.getBalance()/20)
                 player.call();
             else
-                player.raise(player.getBalance()/20);
+                player.raise(Game.maxStake - player.getStake()+player.getBalance()/20);
         }
         else{
             if(Game.maxStake - player.getStake() > player.getBalance()/10)
                 player.call();
             else
-                player.raise(player.getBalance()/10);
+                player.raise(Game.maxStake - player.getStake()+player.getBalance()/10);
         }
     }
 }

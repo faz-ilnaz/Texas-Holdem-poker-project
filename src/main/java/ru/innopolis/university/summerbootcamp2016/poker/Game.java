@@ -34,6 +34,7 @@ public class Game {
 
 
         int dealerId = random.nextInt(amountOfPlayers);
+        realPlayerId = random.nextInt(amountOfPlayers);
 
         while (true) {
 
@@ -58,7 +59,6 @@ public class Game {
             System.out.println("After blind's info:");
             showPlayerInfo(players);
 
-            realPlayerId = random.nextInt(amountOfPlayers);
 
             int theNextPlayerId = (bigBlindId + 1) % amountOfPlayers;
 
@@ -68,7 +68,7 @@ public class Game {
 
                     Player player = players.get(theNextPlayerId);
 
-                    Gameplay.play(player, theNextPlayerId);
+                    Gameplay.play(player, theNextPlayerId, currentDeck);
 
                     do {
                         theNextPlayerId = (theNextPlayerId + 1) % amountOfPlayers;
@@ -199,16 +199,6 @@ public class Game {
             players.get(i).printCards();
         }
     }
-
-    //count the strength of all combinations of Players still playing
-    public static void openCards(List<Player> allPlayers, Deck thisDeck) {
-        for (int i = 0; i < allPlayers.size(); i++) {
-            if (allPlayers.get(i).isPlaying()) {
-                allPlayers.get(i).setStrength(RankingUtils.combinationChecker(thisDeck, allPlayers.get(i).getId()));  //it works!
-            }
-        }
-    }
-
 
     static void resetPlayersStatusesAfterStage(List<Player> players) {
         for (Player player : players) {

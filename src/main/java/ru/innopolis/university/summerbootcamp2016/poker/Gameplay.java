@@ -9,13 +9,13 @@ public class Gameplay {
     private Gameplay() {
     }
 
-    static void play(Player player, int currentPlayerId) {
-//        if (currentPlayerId == Game.realPlayerId) {
+    static void play(Player player, int currentPlayerId, Deck deck) {
+        if (currentPlayerId == Game.realPlayerId) {
             Gameplay.playMyself(player);
-//        }
-//        else {
-//            Gameplay.playAI(player);
-//        }
+        }
+        else {
+            Gameplay.playAI(player, deck);
+        }
     }
 
     static void playMyself(Player player) {
@@ -50,9 +50,7 @@ public class Gameplay {
 
     }
 
-    static void playAI(Player player) {
-        if (!player.call()) {
-            player.check();
-        }
+    static void playAI(Player player, Deck deck) {
+        AI.makeDecision(player, deck);
     }
 }
