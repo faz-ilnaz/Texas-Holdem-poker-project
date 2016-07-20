@@ -3,6 +3,9 @@ package ru.innopolis.university.summerbootcamp2016.poker;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static ru.innopolis.university.summerbootcamp2016.poker.PokerHand.PAIR;
+import static ru.innopolis.university.summerbootcamp2016.poker.PokerHand.THREE_OF_A_KIND;
+import static ru.innopolis.university.summerbootcamp2016.poker.PokerHand.TWO_PAIR;
 
 public class RankingUtilsTest {
 
@@ -11,20 +14,21 @@ public class RankingUtilsTest {
 
     @Test
     public void combinationCheckerTest() {
-        Deck deck = new Deck();
-        Table table = new Table();
+        Deck currentDeck = new Deck();
 
         Integer[][] deckData = {
-                {0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 4, 0, 0},
-                {0, 0, 0, 0, 4, 0, 0, 0, 1, 0, 0, 3, 2},
+                {0, 0, 0, 0, 1, 0, 1, 0, 3, 0, 4, 0, 0},
+                {0, 0, 0, 0, 4, 0, 0, 0, 1, 0, 0, 0, 2},
                 {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2}
+                {0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 1, 0, 2}
         };
 
-        int playerId = 3;
+        currentDeck.deck = deckData;
 
-        int strength = RankingUtils.combinationChecker(deck, playerId);
+        assertEquals(PAIR.getStrength(), RankingUtils.combinationChecker(currentDeck, 2));
+        assertEquals(THREE_OF_A_KIND.getStrength(), RankingUtils.combinationChecker(currentDeck, 3));
+        assertEquals(TWO_PAIR.getStrength(), RankingUtils.combinationChecker(currentDeck, 4));
 
-        assertEquals(2, strength);
+
     }
 }
