@@ -31,4 +31,10 @@ public class Table {
         }
     }
 
+    void reset() {
+        cardsOnTable.clear();
+    }
+
+
+
 }

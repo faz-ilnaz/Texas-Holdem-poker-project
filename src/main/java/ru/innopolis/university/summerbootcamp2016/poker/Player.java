@@ -174,6 +174,7 @@ public class Player {
 
     public boolean fold() {
         this.playingStatus = -1;
+        this.strengthOfHand = 0;
         return true;
     }
 
