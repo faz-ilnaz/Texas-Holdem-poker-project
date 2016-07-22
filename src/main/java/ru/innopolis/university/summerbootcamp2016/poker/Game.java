@@ -2,6 +2,9 @@ package ru.innopolis.university.summerbootcamp2016.poker;
 
 import java.util.*;
 
+/**
+ * Main game logic
+ */
 public class Game {
 
     static int amountCardsTable;
@@ -51,7 +54,6 @@ public class Game {
 
             //Show init info
             System.out.println("Player's info:");
-//            showPlayerInfo(players);
             showPlayerInfo(players.get(realPlayerId));
 
             int smallBlindId = (dealerId + 1) % amountOfPlayers;
@@ -62,7 +64,6 @@ public class Game {
 
             //Show info after setting blinds
             System.out.println("After blind's info:");
-//            showPlayerInfo(players);
             showPlayerInfo(players.get(realPlayerId));
 
 
@@ -75,7 +76,6 @@ public class Game {
                     Player player = players.get(theNextPlayerId);
 
                     Gameplay.play(player, theNextPlayerId, currentDeck);
-                    //System.out.println("!!!!!"+maxStake);
 
                     do {
                         theNextPlayerId = (theNextPlayerId + 1) % amountOfPlayers;
@@ -99,8 +99,8 @@ public class Game {
                     break;
                 }
 
-                // was a preflop
                 if (i == 0) {
+                    // was a preflop
                     currentTable.takeFlop(currentDeck);
                 } else if (i < 3) {
                     // river, turn
@@ -117,8 +117,6 @@ public class Game {
                 players.get(realPlayerId).printCards();
                 currentTable.showTable();
             }
-
-//            showArrayDeck(currentDeck);
 
             RankingUtils.openCards(players, currentDeck);
             List<Player> winners = RankingUtils.determineWinners(players);
@@ -225,6 +223,9 @@ public class Game {
         }
     }
 
+    /**
+     * Pause the program until hit the enter
+     */
     public static void pauseProg() {
         System.out.println("Press enter to continue...");
         Scanner keyboard = new Scanner(System.in);
@@ -237,6 +238,10 @@ public class Game {
         System.out.println();
     }
 
+    /**
+     * Reset those player statuses, who does not folded
+     * @param players
+     */
     static void resetPlayersStatusesAfterStage(List<Player> players) {
         for (Player player : players) {
             if (player.getPlayingStatus() != -1) {
@@ -246,6 +251,10 @@ public class Game {
         }
     }
 
+    /**
+     * Reset all players from the list
+     * @param players
+     */
     static void resetPlayers(List<Player> players) {
         for (Player player : players) {
             player.resetPlayingStatus();

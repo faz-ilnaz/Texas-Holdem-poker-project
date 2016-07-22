@@ -1,5 +1,8 @@
 package ru.innopolis.university.summerbootcamp2016.poker;
 
+/**
+ * Poker bot's helper methods
+ */
  public class AI {
 
      //Calculates confidence of AI in current combination they have

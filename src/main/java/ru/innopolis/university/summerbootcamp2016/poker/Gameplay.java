@@ -2,6 +2,9 @@ package ru.innopolis.university.summerbootcamp2016.poker;
 
 import java.util.Scanner;
 
+/**
+ * Contains logic for making a move
+ */
 public class Gameplay {
 
     static Scanner scanner = new Scanner(System.in);;
@@ -18,6 +21,10 @@ public class Gameplay {
         }
     }
 
+    /**
+     * Get commands explicitly from console
+     * @param player
+     */
     static void playMyself(Player player) {
         boolean status = false;
         System.out.println(player.getName() + ": ");
@@ -55,6 +62,11 @@ public class Gameplay {
 
     }
 
+    /**
+     * Delegate playing to the bot
+     * @param player
+     * @param deck
+     */
     static void playAI(Player player, Deck deck) {
         System.out.println(player.getName() + " makes decision...");
         AI.makeDecision(player, deck);

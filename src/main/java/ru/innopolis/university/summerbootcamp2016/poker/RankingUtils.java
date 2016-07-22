@@ -3,7 +3,7 @@ package ru.innopolis.university.summerbootcamp2016.poker;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
+/**
     Under you can find helping methods and combination checker methods
  */
 class RankingUtils {

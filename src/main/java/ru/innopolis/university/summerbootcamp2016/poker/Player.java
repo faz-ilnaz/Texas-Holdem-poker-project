@@ -3,12 +3,11 @@ package ru.innopolis.university.summerbootcamp2016.poker;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
- * The Player class. Contains not using methods cause they had been used before.
+/**
+ * The Player class.
  * Contains all main functions of Player like call(), raise(), check(), fold()
  * Also there are many helping methods
  */
-
 public class Player {
 
     private String name;
@@ -105,14 +104,14 @@ public class Player {
         this.stake = stake;
     }
 
-    //Method returns stake and resets it
+    /** Method returns stake and resets it */
     public long collectPlayerStake() {
         long s = stake;
         stake = 0;
         return s;
     }
 
-    //Function set stake and subtract balance if stake < balance
+    /** Function set stake and subtract balance if stake < balance */
     public boolean makeStake(long stake) {
         if (stake > this.balance) {
             return false;
@@ -171,7 +170,7 @@ public class Player {
         }
     }
 
-    // check() method returns true if you can make a check
+    /** check() method returns true if you can make a check */
     public boolean check() {
         if (this.stake == Game.maxStake) {
             playingStatus = 1;

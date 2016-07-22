@@ -3,11 +3,10 @@ package ru.innopolis.university.summerbootcamp2016.poker;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
+/**
  * The Table class consists of cards on the table and methods
  * that get cards from the deck
  */
-
 public class Table {
     List<Card> cardsOnTable = new ArrayList<Card>();
     public final int id = 1;
