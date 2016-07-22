@@ -20,7 +20,7 @@ public class Gameplay {
 
     static void playMyself(Player player) {
         boolean status = false;
-        System.out.println(player.getName() + ": ");
+        System.out.println(player.getName() + ", your turn: ");
 
         while (!status) {
             String[] commands = scanner.nextLine().trim().split(" ");
@@ -48,9 +48,13 @@ public class Gameplay {
             }
         }
 
+        System.out.println();
+
     }
 
     static void playAI(Player player, Deck deck) {
+        System.out.println(player.getName() + " makes decision...");
         AI.makeDecision(player, deck);
+        System.out.println();
     }
 }

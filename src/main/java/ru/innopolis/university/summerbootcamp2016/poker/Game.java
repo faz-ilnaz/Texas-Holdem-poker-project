@@ -25,7 +25,7 @@ public class Game {
         for (int i = 2; i < amountOfPlayers + 2; i++) {
             Player player = new Player();
             player.setId(i);
-            player.setName("Player" + i);
+            player.setName("Player" + (i - 2));
             player.setBalance(DEFAULT_BALANCE);
             player.resetPlayingStatus();
             player.setStrength(0);
@@ -38,6 +38,10 @@ public class Game {
 
         while (true) {
 
+            System.out.println("You: " + players.get(realPlayerId).getName());
+            System.out.println("Dealer:" + players.get(dealerId).getName());
+            System.out.println();
+
             for (Player player : players) {
                 player.takeCards(currentDeck);
             }
@@ -45,9 +49,9 @@ public class Game {
             players.get(dealerId).setDealer(true);
 
             //Show init info
-            System.out.println("Init player's info:");
-            showPlayerInfo(players);
-
+            System.out.println("Player's info:");
+//            showPlayerInfo(players);
+            showPlayerInfo(players.get(realPlayerId));
 
             int smallBlindId = (dealerId + 1) % amountOfPlayers;
             int bigBlindId = (smallBlindId + 1) % amountOfPlayers;
@@ -57,7 +61,8 @@ public class Game {
 
             //Show info after setting blinds
             System.out.println("After blind's info:");
-            showPlayerInfo(players);
+//            showPlayerInfo(players);
+            showPlayerInfo(players.get(realPlayerId));
 
 
             int theNextPlayerId = (bigBlindId + 1) % amountOfPlayers;
@@ -104,20 +109,28 @@ public class Game {
 
                 maxStake = 0;
                 resetPlayersStatusesAfterStage(players);
+                players.get(realPlayerId).printCards();
                 currentTable.showTable();
             }
 
-            showArrayDeck(currentDeck);
+//            showArrayDeck(currentDeck);
 
-        RankingUtils.openCards(players, currentDeck);
-        List<Player> winners = RankingUtils.determineWinners(players);
-        long reward = bank.getReward();
+            RankingUtils.openCards(players, currentDeck);
+            List<Player> winners = RankingUtils.determineWinners(players);
+            long reward = bank.getReward();
 
             System.out.println("--- WINNERS ---");
             for (Player winner : winners) {
                 winner.setBalance(winner.getBalance() + reward / winners.size());
-                System.out.println(winner.getName());
+                System.out.println(winner.getName() + ", balance: " + winner.getBalance() + ", " +
+                        PokerHand.values()[(int) winner.getStrength()]);
             }
+
+
+            players.get(realPlayerId).printInfo();
+            System.out.println();
+
+            pauseProg();
 
             checkPlayersBalance(players);
 
@@ -198,6 +211,18 @@ public class Game {
             players.get(i).printInfo();
             players.get(i).printCards();
         }
+    }
+
+    public static void pauseProg() {
+        System.out.println("Press enter to continue...");
+        Scanner keyboard = new Scanner(System.in);
+        keyboard.nextLine();
+    }
+
+    public static void showPlayerInfo(Player player) {
+        player.printInfo();
+        player.printCards();
+        System.out.println();
     }
 
     static void resetPlayersStatusesAfterStage(List<Player> players) {

@@ -29,6 +29,7 @@ public class Table {
         for (int i = 0; i < cardsOnTable.size(); i++) {
             UI.displayCard(cardsOnTable.get(i));
         }
+        System.out.println();
     }
 
     void reset() {

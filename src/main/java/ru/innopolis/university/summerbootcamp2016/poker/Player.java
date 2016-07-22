@@ -142,14 +142,14 @@ public class Player {
         if (raise > Game.maxStake - this.stake) {
             if (makeStake(raise)) {
                 playingStatus = 1;
-                System.out.println("Raise is correct!");
+                System.out.println("Raise is correct! (" + raise + ")");
                 return true;
             } else {
                 System.out.println("You can not make a raise! Not enough balance!");
                 return false;
             }
         } else {
-            System.out.println("Raise can not be less than previous raise!");
+            System.out.println("Raise can not be less than previous raise! (" + (Game.maxStake - this.stake) + ")");
             return false;
         }
     }
@@ -185,6 +185,7 @@ public class Player {
     public boolean fold() {
         this.playingStatus = -1;
         this.strengthOfHand = 0;
+        System.out.println("Fold is correct");
         return true;
     }
 
@@ -195,7 +196,7 @@ public class Player {
     }
 
     public void printInfo() {
-        System.out.println("\nPlayer " + this.getId() + " Stake:" + this.getStake() + " Balance:" + this.getBalance() +
+        System.out.println("\n" + this.getName() + " Stake:" + this.getStake() + " Balance:" + this.getBalance() +
         " IsDealer: " + dealer);
     }
 
