@@ -13,12 +13,13 @@ public class Game {
     public static final long SMALL_BLIND = 1;
     public static int amountOfPlayers = 3;
     public static final int DEFAULT_BALANCE = 100;
+    public static Bank bank;
 
 
     public static void main(String[] args) {
         Deck currentDeck = new Deck();
         Table currentTable = new Table();
-        Bank bank = new Bank();
+        bank = new Bank();
         amountCardsTable = 0;
 
         List<Player> players = new ArrayList<>(amountOfPlayers);
@@ -74,6 +75,7 @@ public class Game {
                     Player player = players.get(theNextPlayerId);
 
                     Gameplay.play(player, theNextPlayerId, currentDeck);
+                    //System.out.println("!!!!!"+maxStake);
 
                     do {
                         theNextPlayerId = (theNextPlayerId + 1) % amountOfPlayers;
@@ -91,6 +93,9 @@ public class Game {
                 bank.collectStakes(players);
 
                 if (countOfActivePlayers < 2) {
+                    maxStake = 0;
+                    resetPlayersStatusesAfterStage(players);
+                    currentTable.showTable();
                     break;
                 }
 
@@ -123,7 +128,7 @@ public class Game {
             for (Player winner : winners) {
                 winner.setBalance(winner.getBalance() + reward / winners.size());
                 System.out.println(winner.getName() + ", balance: " + winner.getBalance() + ", " +
-                        PokerHand.values()[(int) winner.getStrength()]);
+                        PokerHand.values()[10-(int)winner.getStrength()]);
             }
 
 
