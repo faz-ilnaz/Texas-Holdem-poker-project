@@ -20,7 +20,10 @@ public class Gameplay {
 
     static void playMyself(Player player) {
         boolean status = false;
-        System.out.println(player.getName() + ", your turn: ");
+        System.out.println(player.getName() + ": ");
+        System.out.println("Your current stake - " + player.getStake() + ", maximal stake "+Game.maxStake);
+        System.out.println("Your current balance - " + player.getBalance());
+        System.out.println("Current Bank :" + Game.bank.getBankBalance());
 
         while (!status) {
             String[] commands = scanner.nextLine().trim().split(" ");

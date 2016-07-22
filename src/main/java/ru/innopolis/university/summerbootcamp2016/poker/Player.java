@@ -142,7 +142,7 @@ public class Player {
         if (raise > Game.maxStake - this.stake) {
             if (makeStake(raise)) {
                 playingStatus = 1;
-                System.out.println("Raise is correct! (" + raise + ")");
+                System.out.println("Raise is correct! Maximal stake is now "+Game.maxStake);
                 return true;
             } else {
                 System.out.println("You can not make a raise! Not enough balance!");
@@ -159,7 +159,7 @@ public class Player {
         if (diff != 0) {
             if (makeStake(diff)) {
                 playingStatus = 1;
-                System.out.println("Call is correct");
+                System.out.println("Call is correct. Maximal stake is now "+Game.maxStake);
                 return true;
             } else {
                 System.out.println("You can not call");
@@ -175,6 +175,7 @@ public class Player {
     public boolean check() {
         if (this.stake == Game.maxStake) {
             playingStatus = 1;
+            System.out.println("Checked");
             return true;
         } else {
             System.out.println("You can not make a check! Your stake is not equal to max value!");

@@ -53,6 +53,7 @@ package ru.innopolis.university.summerbootcamp2016.poker;
                 highConfidence=12;
         }
 
+        confidence = confidence-5*(int)Game.maxStake/((int)player.getBalance()+1);
         if(confidence<lowConfidence){
             player.fold();
         }
@@ -69,16 +70,16 @@ package ru.innopolis.university.summerbootcamp2016.poker;
             }
         }
         else if(confidence<highConfidence){
-            if(Game.maxStake - player.getStake() > player.getBalance()/20)
+            if(Game.maxStake - player.getStake() >= player.getBalance()/20)
                 player.call();
             else
-                player.raise(Game.maxStake - player.getStake()+player.getBalance()/20);
+                player.raise(player.getBalance()/20);
         }
         else{
-            if(Game.maxStake - player.getStake() > player.getBalance()/10)
+            if(Game.maxStake - player.getStake() >= player.getBalance()/10)
                 player.call();
             else
-                player.raise(Game.maxStake - player.getStake()+player.getBalance()/10);
+                player.raise(player.getBalance()/10);
         }
     }
 }
