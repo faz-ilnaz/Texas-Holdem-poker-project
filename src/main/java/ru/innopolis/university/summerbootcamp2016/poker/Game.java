@@ -124,11 +124,18 @@ public class Game {
             List<Player> winners = RankingUtils.determineWinners(players);
             long reward = bank.getReward();
 
+            System.out.println("Opening cards: ");
+            for (Player player : players) {
+                player.printInfo();
+                player.printCards();
+                System.out.println();
+            }
+
             System.out.println("--- WINNERS ---");
             for (Player winner : winners) {
                 winner.setBalance(winner.getBalance() + reward / winners.size());
                 System.out.println(winner.getName() + ", balance: " + winner.getBalance() + ", " +
-                        PokerHand.values()[10-(int)winner.getStrength()]);
+                        PokerHand.values()[10 - (int) winner.getStrength()]);
             }
 
 
